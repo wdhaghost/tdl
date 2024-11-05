@@ -1,7 +1,8 @@
 import { createReducer, on } from "@ngrx/store";
-import { addTodo } from "./todo-list.actions";
+import { addTodo, editTodo } from "./todo-list.actions";
 
 export interface Todo {
+    id: string
     title: string;
     state: boolean;
 }
@@ -18,5 +19,10 @@ export const todoListReducer = createReducer(
 
         ...state,
         todos:[...state.todos,todo]
+    })),
+    on(editTodo,(state,{todo})=>({
+
+        ...state,
+        todos:state.todos.map((t)=>( t.id == todo.id ? todo:t ))
     }))
 )
